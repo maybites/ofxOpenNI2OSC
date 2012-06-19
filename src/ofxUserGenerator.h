@@ -53,7 +53,8 @@ public:
 	void				update();
 
     //OSC
-    void				send();
+    void				sendRaw();
+    void				sendDetail();
 
 	void				startTracking(XnUserID nID);
 	void				startPoseDetection(XnUserID nID);
@@ -84,9 +85,6 @@ private:
 	void				drawUser(int nUserNum);
 	void				updateUserPixels();
 	void				updateCloudPoints();
-
-    //OSC
-    void				sendUser(int nUserNum);
 
 	ofxOpenNIContext*	context;
 	xn::DepthGenerator	depth_generator;

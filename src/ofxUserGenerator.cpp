@@ -258,14 +258,6 @@ void ofxUserGenerator::drawUser(int nUserNum) {
 	tracked_users[nUserNum]->debugDraw();
 }
 
-// OSC:Send a specific user (start counting at 0)
-//----------------------------------------
-void ofxUserGenerator::sendUser(int nUserNum) {
-	if(nUserNum - 1 > MAX_NUMBER_USERS)
-		return;
-	tracked_users[nUserNum]->sendSmall();
-}
-
 // Draw all the found users.
 //----------------------------------------
 void ofxUserGenerator::draw() {
@@ -289,20 +281,36 @@ void ofxUserGenerator::draw() {
 	
 }
 
-// OSC: Send all the found users.
+// OSC: Send all the found users in Raw - Format.
 //----------------------------------------
-void ofxUserGenerator::send() {
+void ofxUserGenerator::sendRaw() {
 	
 	// show green/red circle if any one is found
 	if (found_users > 0) {
 		
 		// send all the users
 		for(int i = 0;  i < found_users; ++i) {
-			sendUser(i);
+            if(i - 1 > MAX_NUMBER_USERS)
+                return;
+            tracked_users[i]->sendRaw();
 		}
-		
 	}
+}
+
+// OSC: Send all the found users in Raw - Format.
+//----------------------------------------
+void ofxUserGenerator::sendDetail() {
 	
+	// show green/red circle if any one is found
+	if (found_users > 0) {
+		
+		// send all the users
+		for(int i = 0;  i < found_users; ++i) {
+            if(i - 1 > MAX_NUMBER_USERS)
+                return;
+            tracked_users[i]->sendDetail();
+		}
+	}
 }
 
 // Get a tracked user.

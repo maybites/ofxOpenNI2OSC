@@ -172,7 +172,7 @@ void ofxTrackedUser::debugDraw(const float wScale, const float hScale) {
 //--------------------------------------------------------------
 //OSC....
 //--------------------------------------------------------------
-void ofxTrackedUser::sendSmall() {
+void ofxTrackedUser::sendRaw() {
 	
 	ofxOscMessage message;
 	message.setAddress("/skeleton/data");
@@ -225,7 +225,7 @@ void ofxTrackedUser::addLimbData(ofxOscMessage& m, ofxLimb& rLimb){
 	m.addFloatArg( rLimb.position3D[1].Y );
 }
 
-void ofxTrackedUser::send() {
+void ofxTrackedUser::sendDetail() {
 	
 	sendOscSimpleMessage("/skeleton/start");
 	
@@ -274,12 +274,12 @@ void ofxTrackedUser::sendOscMessage  (const string& address, ofxLimb& rLimb){
 		ofxOscMessage m;
 		m.setAddress( address );
 		m.addIntArg( (int) id );
-		m.addFloatArg( rLimb.position[0].X );
-		m.addFloatArg( rLimb.position[0].Y );
-		m.addFloatArg( rLimb.position[0].Z );
-		m.addFloatArg( rLimb.position[1].X );
-		m.addFloatArg( rLimb.position[1].Y );
-		m.addFloatArg( rLimb.position[1].Z );
+		m.addFloatArg( rLimb.position3D[0].X );
+		m.addFloatArg( rLimb.position3D[0].Y );
+		m.addFloatArg( rLimb.position3D[0].Z );
+		m.addFloatArg( rLimb.position3D[1].X );
+		m.addFloatArg( rLimb.position3D[1].Y );
+		m.addFloatArg( rLimb.position3D[1].Z );
 		//m.addStringArg( "hello" );
 		sender.sendMessage( m );
 	}

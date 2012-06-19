@@ -1,10 +1,15 @@
-OFXOPENNI FOR MAC & WIN
+OFXOPENNI -> OSC FOR MAC & WIN
 =======================
-The ofxOpenNI module is a wrapper for the openNI + NITE + SensorKinect libraries/middleware for openFrameworks. 
+The ofxOpenNI2OSC module is a wrapper for the openNI + NITE + SensorKinect libraries/middleware for openFrameworks.
 
-Tested and working on Mac OSX (10.6.8), Linux (Ubuntu 10.10 64 & 32), Windows 7 (VS2010 and Codeblocks)
+It is a fork of ofxOpenNI by Martin Froehlich 
 
-Latest changes (09/01/20112):
+Tested and working on Mac OSX (10.7.4)
+
+Latest changes (19/06/2012)
+* Added OSC-send methods to the library.
+
+Previous changes (09/01/2012):
 * Updated to latest drivers (OpenNI 1.5.2.7 unstable, NITE 1.5.2.7 , SensorKinect (Avin) 5.1.0.25) for Mac portable dylibs.
 * Tested with Win32 latest unstable and linux 64 latest unstable drivers and is working (NOTE: Win 7 64 bit users I may need to add a 64 bit version of the lib)...will test soon
 * Added a weird hack to make sure the ofRootPath is set before calling an init on the Context - for some reason on of007 I need to do this?!?
@@ -12,15 +17,6 @@ Latest changes (09/01/20112):
 * Fixed a bug in the example where my demo of MaskPixels was making everything go black...for some reason glEnableBlend(GL_DST_COLOR, GL_ZERO) is not behaving like I expect
 * Restructured the examples folder, including going back to having the config folder already in the bin/data/openni path
 
-Previous changes:
-* Updated to latest drivers (OpenNI 1.1.0.41 unstable, NITE 1.3.1.5 , SensorKinect (Avin) 5.0.1.32)
-* Compiled these as portable dylibs for Mac OSX (see NOTE ABOUT PORTABILITY below)
-* Added Codeblocks support for Windows
-* Added Linux support (Codeblocks)
-* Bugfixed HandTracker and GestureGenerator (was ignoring initial gestures due to timestamp issue)
-* Added setMaxNumberOfUsers to UserGenerator (although memory allocation is still done with a define for MAX_NUMBER_USERS cpu intense iterations for point clouds and masks can now be limited by setting a 'soft' max using this function. TODO: make the arrays/mem dynamically allocate)
-* Other minor bug fixes, etc
-* Updated this readme...
 
 INSTALLATION
 ============
@@ -40,6 +36,80 @@ git checkout experimental
 
 Please make your pull requests on the Develop or Experimental branches!!!
 
+
+USING OSC-FUNCTIONALITY
+=======================
+
+With the provided examplecode it is possible to send OSC message in a raw form or in a detailed form.
+
+look for these methods inside /src/testApp.cpp -> void testApp::draw() function 
+
+		recordUser.sendDetail();
+        //recordUser.sendRaw();
+
+**Detail structure:**
+
+	/skeleton/start
+
+neck:
+	/skeleton/neck x.head y.head z.head x.neck y.neck z.neck
+	
+left arm + shoulder:
+    /skeleton/left/shoulder x.neck y.neck z.neck x.l_shoulder y.l_shoulder z.l_shoulder
+    /skeleton/left/arm/upper x.l_shoulder y.l_shoulder z.l_shoulder x.l_elbow y.l_elbow z.l_elbow
+    /skeleton/left/arm/lower x.l_elbow y.l_elbow z.l_elbow x.l_hand y.l_hand z.l_hand
+	
+right arm + shoulder:
+   	/skeleton/right/shoulder x.neck y.neck z.neck x.r_shoulder y.r_shoulder z.r_shoulder
+    /skeleton/right/arm/upper x.r_shoulder y.r_shoulder z.r_shoulder x.r_elbow y.r_elbow z.r_elbow
+    /skeleton/right/arm/lower x.r_elbow y.r_elbow z.r_elbow x.r_hand y.r_hand z.r_hand
+	
+upper torso:
+    /skeleton/left/torso/uppper x.l_shoulder y.l_shoulder z.l_shoulder x.torso y.torso z.torso
+    /skeleton/right/torso/upper x.r_shoulder y.r_shoulder z.r_shoulder x.torso y.torso z.torso
+	
+left lower torso + leg:
+    /skeleton/left/torso/lower x.torso y.torso z.torso x.l_hip y.l_hip z.l_hip
+    /skeleton/left/leg/upper x.l_hip y.l_hip z.l_hip x.l_knee y.l_knee z.l_knee 
+    /skeleton/left/leg/lower x.l_knee y.l_knee z.l_knee x.l_foot y.l_foot z.l_foot 
+	
+right lower torso + leg:
+	/skeleton/right/torso/lower x.torso y.torso z.torso x.r_hip y.r_hip z.r_hip
+	/skeleton/right/leg/upper x.r_hip y.r_hip z.r_hip x.r_knee y.r_knee z.r_knee
+	/skeleton/right/leg/lower x.r_knee y.r_knee z.r_knee x.r_foot y.r_foot z.r_foot 
+	
+hip:
+	/skeleton/hip x.l_hip y.l_hip z.l_hip x.r_hip y.r_hip z.r_hip
+	
+	/skeleton/end
+	
+**Raw structure:**
+
+	/skeleton/data 
+		id
+		confidence.head x.head y.head z.head
+		confidence.neck x.neck y.neck z.neck
+
+		confidence.l_shoulder x.l_shoulder y.l_shoulder z.l_shoulder
+		confidence.l_elbow x.l_elbow y.l_elbow z.l_elbow 
+		confidence.l_hand x.l_hand y.l_hand z.l_hand
+
+		confidence.r_shoulder x.r_shoulder y.r_shoulder z.r_shoulder
+		confidence.r_elbow x.r_elbow y.r_elbow z.r_elbow
+		confidence.r_hand x.r_hand y.r_hand z.r_hand
+		
+		confidence.torso x.torso y.torso z.torso
+		
+		confidence.l_hip x.l_hip y.l_hip z.l_hip
+		confidence.l_knee x.l_knee y.l_knee z.l_knee 
+		confidence.l_foot x.l_foot y.l_foot z.l_foot
+
+		confidence.r_hip x.r_hip y.r_hip z.r_hip
+		confidence.r_knee x.r_knee y.r_knee z.r_knee 
+		confidence.r_foot x.r_foot y.r_foot z.r_foot
+	
+		
+
 NOTES ON THE EXAMPLE(S)
 =======================
 
@@ -47,7 +117,7 @@ I've tried to include a bit of every feature in the example. As a consequence it
 
 * Multiple hand tracking is not supported natively in openNI. The way it works is that a GestureGenerator works out when your waving, raising or clicking (pushing your hand forward). Based on the coordinates of the detected gesture, hand tracking is instantiated for that hand. In openNI examples you would then turn off gesture recognition and just track the hand. When the hand is lost you turn on gesture recognition again. But in order to get multiple hands it is necessary to continue looking for gestures. This means it is necessary to filter gesture recognition for the hand(s) that are already recognised. I'm doing that two ways: 1) Gestures recognised within a set distance from already recognised hands are ignored; 2) Gestures recognised within a set time from the last recognised gesture are ignored. Both of these vars, distance and time can be adjusted with setMinDistBetweenHands and setMinTimeBetweenHands respectively. Play with these to tweak tracking. Or modify them if they aren't working great ;-)
 
-* Running masks AND point clouds simultaneously chugs. Try running one or the other. Try lowering the max number of tracked users…
+* Running masks AND point clouds simultaneously chugs. Try running one or the other. Try lowering the max number of tracked users‚Ä¶
 
 * Best performance seems to be on Mac and Windows (Codeblocks)
 

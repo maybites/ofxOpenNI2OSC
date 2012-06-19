@@ -39,7 +39,7 @@
 
 #include "ofxOscSender.h"
 
-#define HOST "10.0.0.101"
+#define HOST "127.0.0.1"
 #define PORT 9030
 
 
@@ -95,8 +95,8 @@ public:
 	void debugDraw(const float wScale=1.0f, const float hScale=1.0f);
 
     //OSC
-    void send();
-	void sendSmall();
+    void sendDetail();
+	void sendRaw();
 
 	ofxLimb neck;
 
