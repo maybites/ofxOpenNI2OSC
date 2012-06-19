@@ -4,6 +4,8 @@
  * Copyright 2011 (c) Matthew Gingold http://gingold.com.au
  * Originally forked from a project by roxlu http://www.roxlu.com/ 
  *
+ * OSC implementation by Martin Froehlich http://maybites.ch
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -35,6 +37,12 @@
 #include "ofxOpenNIContext.h"
 #include "ofMain.h"
 
+#include "ofxOscSender.h"
+
+#define HOST "10.0.0.101"
+#define PORT 9030
+
+
 struct ofxLimb {
 	ofxLimb(XnSkeletonJoint nStartJoint, XnSkeletonJoint nEndJoint)
 	:start_joint(nStartJoint)
@@ -44,6 +52,11 @@ struct ofxLimb {
 		position[0].X = position[1].X = 0;
 		position[0].Y = position[1].Y = 0;
 		position[0].Z = position[1].Z = 0;
+        
+        // OSC
+        position3D[0].X = position3D[1].X = 0;
+		position3D[0].Y = position3D[1].Y = 0;
+		position3D[0].Z = position3D[1].Z = 0;
 	}
 
 	ofxLimb(){};
@@ -52,6 +65,12 @@ struct ofxLimb {
 	XnSkeletonJoint start_joint;
 	XnSkeletonJoint end_joint;
 	XnPoint3D position[2];
+    
+    // OSC
+    XnPoint3D position3D[2];
+	float confidence1;
+	float confidence0;
+
 	bool found;
 
 	void debugDraw() {
@@ -74,6 +93,10 @@ class ofxTrackedUser {
 public:
 
 	void debugDraw(const float wScale=1.0f, const float hScale=1.0f);
+
+    //OSC
+    void send();
+	void sendSmall();
 
 	ofxLimb neck;
 
@@ -113,6 +136,12 @@ private:
 
 	void updateBonePositions();
 	void updateLimb(ofxLimb& rLimb);
+
+    //OSC
+    void sendOscMessage(const string& address, ofxLimb& rLimb);
+	void sendOscSimpleMessage(const string& address);
+	void addLimbData(ofxOscMessage& m, ofxLimb& rLimb);
+	ofxOscSender sender;
 
 	ofxOpenNIContext*		context;
 	xn::UserGenerator		user_generator;

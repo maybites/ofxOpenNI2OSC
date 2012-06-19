@@ -4,6 +4,8 @@
  * Copyright 2011 (c) Matthew Gingold http://gingold.com.au
  * Originally forked from a project by roxlu http://www.roxlu.com/ 
  *
+ * OSC implementation by Martin Froehlich http://maybites.ch
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -50,6 +52,9 @@ public:
 	void				draw();
 	void				update();
 
+    //OSC
+    void				send();
+
 	void				startTracking(XnUserID nID);
 	void				startPoseDetection(XnUserID nID);
 	void				stopPoseDetection(XnUserID nID);
@@ -79,7 +84,10 @@ private:
 	void				drawUser(int nUserNum);
 	void				updateUserPixels();
 	void				updateCloudPoints();
-	
+
+    //OSC
+    void				sendUser(int nUserNum);
+
 	ofxOpenNIContext*	context;
 	xn::DepthGenerator	depth_generator;
 	xn::ImageGenerator	image_generator;

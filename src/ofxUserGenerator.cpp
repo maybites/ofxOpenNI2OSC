@@ -4,6 +4,8 @@
  * Copyright 2011 (c) Matthew Gingold http://gingold.com.au
  * Originally forked from a project by roxlu http://www.roxlu.com/ 
  *
+ * OSC implementation by Martin Froehlich http://maybites.ch
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -256,6 +258,14 @@ void ofxUserGenerator::drawUser(int nUserNum) {
 	tracked_users[nUserNum]->debugDraw();
 }
 
+// OSC:Send a specific user (start counting at 0)
+//----------------------------------------
+void ofxUserGenerator::sendUser(int nUserNum) {
+	if(nUserNum - 1 > MAX_NUMBER_USERS)
+		return;
+	tracked_users[nUserNum]->sendSmall();
+}
+
 // Draw all the found users.
 //----------------------------------------
 void ofxUserGenerator::draw() {
@@ -276,6 +286,22 @@ void ofxUserGenerator::draw() {
 	
 	// reset to white for simplicity
 	glColor3f(1.0f, 1.0f, 1.0f);
+	
+}
+
+// OSC: Send all the found users.
+//----------------------------------------
+void ofxUserGenerator::send() {
+	
+	// show green/red circle if any one is found
+	if (found_users > 0) {
+		
+		// send all the users
+		for(int i = 0;  i < found_users; ++i) {
+			sendUser(i);
+		}
+		
+	}
 	
 }
 
