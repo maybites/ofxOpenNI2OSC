@@ -50,22 +50,23 @@ look for these methods inside /src/testApp.cpp -> void testApp::draw() function
 **Detail structure:**
 
 	/skeleton/start
-	/skeleton/neck x.head y.head z.head x.neck y.neck z.neck
-    /skeleton/left/shoulder x.neck y.neck z.neck x.l_shoulder y.l_shoulder z.l_shoulder
-    /skeleton/left/arm/upper x.l_shoulder y.l_shoulder z.l_shoulder x.l_elbow y.l_elbow z.l_elbow
-    /skeleton/left/arm/lower x.l_elbow y.l_elbow z.l_elbow x.l_hand y.l_hand z.l_hand
-   	/skeleton/right/shoulder x.neck y.neck z.neck x.r_shoulder y.r_shoulder z.r_shoulder
-    /skeleton/right/arm/upper x.r_shoulder y.r_shoulder z.r_shoulder x.r_elbow y.r_elbow z.r_elbow
-    /skeleton/right/arm/lower x.r_elbow y.r_elbow z.r_elbow x.r_hand y.r_hand z.r_hand
-    /skeleton/left/torso/uppper x.l_shoulder y.l_shoulder z.l_shoulder x.torso y.torso z.torso
-    /skeleton/right/torso/upper x.r_shoulder y.r_shoulder z.r_shoulder x.torso y.torso z.torso
-    /skeleton/left/torso/lower x.torso y.torso z.torso x.l_hip y.l_hip z.l_hip
-    /skeleton/left/leg/upper x.l_hip y.l_hip z.l_hip x.l_knee y.l_knee z.l_knee 
-    /skeleton/left/leg/lower x.l_knee y.l_knee z.l_knee x.l_foot y.l_foot z.l_foot 
-	/skeleton/right/torso/lower x.torso y.torso z.torso x.r_hip y.r_hip z.r_hip
-	/skeleton/right/leg/upper x.r_hip y.r_hip z.r_hip x.r_knee y.r_knee z.r_knee
-	/skeleton/right/leg/lower x.r_knee y.r_knee z.r_knee x.r_foot y.r_foot z.r_foot 
-	/skeleton/hip x.l_hip y.l_hip z.l_hip x.r_hip y.r_hip z.r_hip	/skeleton/end
+	/skeleton/neck id x.head y.head z.head x.neck y.neck z.neck
+    /skeleton/left/shoulder id x.neck y.neck z.neck x.l_shoulder y.l_shoulder z.l_shoulder
+    /skeleton/left/arm/upper id x.l_shoulder y.l_shoulder z.l_shoulder x.l_elbow y.l_elbow z.l_elbow
+    /skeleton/left/arm/lower id x.l_elbow y.l_elbow z.l_elbow x.l_hand y.l_hand z.l_hand
+   	/skeleton/right/shoulder id x.neck y.neck z.neck x.r_shoulder y.r_shoulder z.r_shoulder
+    /skeleton/right/arm/upper id x.r_shoulder y.r_shoulder z.r_shoulder x.r_elbow y.r_elbow z.r_elbow
+    /skeleton/right/arm/lower id x.r_elbow y.r_elbow z.r_elbow x.r_hand y.r_hand z.r_hand
+    /skeleton/left/torso/uppper id x.l_shoulder y.l_shoulder z.l_shoulder x.torso y.torso z.torso
+    /skeleton/right/torso/upper id x.r_shoulder y.r_shoulder z.r_shoulder x.torso y.torso z.torso
+    /skeleton/left/torso/lower id x.torso y.torso z.torso x.l_hip y.l_hip z.l_hip
+    /skeleton/left/leg/upper id x.l_hip y.l_hip z.l_hip x.l_knee y.l_knee z.l_knee 
+    /skeleton/left/leg/lower id x.l_knee y.l_knee z.l_knee x.l_foot y.l_foot z.l_foot 
+	/skeleton/right/torso/lower id x.torso y.torso z.torso x.r_hip y.r_hip z.r_hip
+	/skeleton/right/leg/upper id x.r_hip y.r_hip z.r_hip x.r_knee y.r_knee z.r_knee
+	/skeleton/right/leg/lower id x.r_knee y.r_knee z.r_knee x.r_foot y.r_foot z.r_foot 
+	/skeleton/hip id x.l_hip y.l_hip z.l_hip x.r_hip y.r_hip z.r_hip	
+	/skeleton/end
 	
 **Raw structure:**
 
